@@ -7,13 +7,24 @@
     color: #090A0B;
 }
 
+
+.post-body {
+    font-family: Georgia, serif, 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+p {
+    margin: 0 0 15px 0;
+    font-size: 1rem;
+    color: #3c484e;
+}
+
 h1, h2, h3, h4, h5, h6 {
     margin: .5em 0 .2em;
     padding: 0;
     font-weight: bold;
     line-height: 1.5;
     color: #191a1b;
-    font-family: serif,'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-family: Georgia, serif, 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 
 h1 {
@@ -28,11 +39,16 @@ h3 {
     font-size: 19px;
 }
 
-p {
-    margin: 0 0 15px 0;
-    font-size: 1rem;
-    color: #3c484e;
-    font-family: Georgia,serif;
+@media (max-width: 767px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+    h2 {
+        font-size: 1.3rem;
+    }
+    h3 {
+        font-size: 1.1rem;
+    }
 }
 
 .posts-expand .post-body ul li {
@@ -90,16 +106,4 @@ code {
 b, strong {
     font-weight: bold;
     color: #404040;
-}
-
-@media (max-width: 767px) {
-    h1 {
-        font-size: 1.5rem;
-    }
-    h2 {
-        font-size: 1.3rem;
-    }
-    h3 {
-        font-size: 1.1rem;
-    }
 }
