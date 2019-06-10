@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+  
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/Angry_Birds.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/Angry_Birds.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前景提要很久之前看到 Google News 的 TabLayout 的样式挺有意思的，如下图：">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="模仿Google News 的 TabLayout">
+<meta property="og:url" content="https://howshea.coding.me/2019/04/22/模仿Google-News的TabLayout/index.html">
+<meta property="og:site_name" content="Howshea">
+<meta property="og:description" content="前景提要很久之前看到 Google News 的 TabLayout 的样式挺有意思的，如下图：">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/1/8/1682b5db9a2db76c?w=1080&h=2160&f=png&s=1088210">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/1/8/1682b79ea8ea9c3e?w=1080&h=2160&f=png&s=424859">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/1/8/1682b7d7ca8d4b40?w=382&h=240&f=png&s=26774">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/1/8/1682c8f07936ff24?w=1486&h=930&f=png&s=95116">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/1/8/1682cccd096faf2b?w=240&h=240&f=jpeg&s=9839">
+<meta property="og:updated_time" content="2019-06-10T11:33:38.104Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="模仿Google News 的 TabLayout">
+<meta name="twitter:description" content="前景提要很久之前看到 Google News 的 TabLayout 的样式挺有意思的，如下图：">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2019/1/8/1682b5db9a2db76c?w=1080&h=2160&f=png&s=1088210">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://howshea.coding.me/2019/04/22/模仿Google-News的TabLayout/">
+
+
+
+
+
+  <title>模仿Google News 的 TabLayout | Howshea</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?77435816125fc45b8d1e0f83cda162c2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Howshea</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">心里像是有一些话，我们先不讲</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://howshea.coding.me/2019/04/22/模仿Google-News的TabLayout/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Howshea">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Howshea">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">模仿Google News 的 TabLayout</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-22T11:16:32+08:00">
+                2019-04-22 11:16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,181
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前景提要"><a href="#前景提要" class="headerlink" title="前景提要"></a>前景提要</h2><p>很久之前看到 Google News 的 <code>TabLayout</code> 的样式挺有意思的，如下图：</p>
+<a id="more"></a>
+<p><img src="https://user-gold-cdn.xitu.io/2019/1/8/1682b5db9a2db76c?w=1080&amp;h=2160&amp;f=png&amp;s=1088210" alt><br>具体效果大家可以自己下载 Google News 看一下，截图上大概看出来一共有两个要素：</p>
+<ol>
+<li>指示器和文字宽度相同</li>
+<li>指示器的形状是半个圆角矩形</li>
+</ol>
+<p>于是，我模仿的结果：（截图来自我的一个小项目里<a href="https://github.com/howshea/GeekNews" target="_blank" rel="noopener">GeekNews</a>）<br><img src="https://user-gold-cdn.xitu.io/2019/1/8/1682b79ea8ea9c3e?w=1080&amp;h=2160&amp;f=png&amp;s=424859" alt></p>
+<p>开始模仿之前，先问个问题，这个控件是 TabLayout 吗？答案：是的，我用 monitor 看过了。<br>所以可以得到结论：直接魔改源码是最简单最快的方法。</p>
+<h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><h3 id="魔改系统组件的第一步都是先把源码拷出来"><a href="#魔改系统组件的第一步都是先把源码拷出来" class="headerlink" title="魔改系统组件的第一步都是先把源码拷出来"></a>魔改系统组件的第一步都是先把源码拷出来</h3><p><img src="https://user-gold-cdn.xitu.io/2019/1/8/1682b7d7ca8d4b40?w=382&amp;h=240&amp;f=png&amp;s=26774" alt><br>就这四个文件，拷出来改改里面一些类的引用路径，试一下能用就行了</p>
+<h3 id="实现半个圆角矩形"><a href="#实现半个圆角矩形" class="headerlink" title="实现半个圆角矩形"></a>实现半个圆角矩形</h3><p>简单看一下 TabLayout 这个类的结构可以看出， TabLayout 内的指示器是由一个 私有内部类 <code>SlidingTabStrip</code> 来控制的，再看一下其中的 <code>draw</code> 方法实现，<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.draw(canvas);</span><br><span class="line">    <span class="comment">// Thick colored underline below the current selection</span></span><br><span class="line">    <span class="keyword">if</span> (mIndicatorLeft &gt;= <span class="number">0</span> &amp;&amp; mIndicatorRight &gt; mIndicatorLeft) &#123;</span><br><span class="line">        canvas.drawRect(mIndicatorLeft, getHeight() - mSelectedIndicatorHeight,</span><br><span class="line">mIndicatorRight, getHeight(), mSelectedIndicatorPaint);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里画了一个矩形，从<code>mIndicatorLeft</code>、<code>mIndicatorRight</code>、<code>mSelectedIndicatorPaint</code>这几个变量的名字上就非常非常明显可以看出，这个矩形就是tab下面的那个矩形指示器条 (此处应有️配图)</p>
+<p>这个地方我们可以先实现半个圆角矩形的效果，圆角很简单，把<code>drawRect</code> 换成 <code>drawRoundRect</code> 即可，半个矩形只要画一个超过控件最底部的rectF,让控件自己裁掉这个rectF的一半高度，圆角则取这个一半高度，就是<code>mSelectedIndicatorHeight</code>的值<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.draw(canvas);</span><br><span class="line">    <span class="comment">// Thick colored underline below the current selection</span></span><br><span class="line">    <span class="keyword">if</span> (mIndicatorLeft &gt;= <span class="number">0</span> &amp;&amp; mIndicatorRight &gt; mIndicatorLeft) &#123;</span><br><span class="line">        RectF rectF = <span class="keyword">new</span> RectF(mIndicatorLeft, getHeight() - mSelectedIndicatorHeight, mIndicatorRight, getHeight() + mSelectedIndicatorHeight);</span><br><span class="line">        mSelectedIndicatorPaint.setAntiAlias(<span class="keyword">true</span>);</span><br><span class="line">        canvas.drawRoundRect(rectF, mSelectedIndicatorHeight, mSelectedIndicatorHeight, mSelectedIndicatorPaint);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到这里我们仅利用已有的变量就能实现半个圆角矩形的效果。</p>
+<h3 id="实现指示器宽度与文字等宽"><a href="#实现指示器宽度与文字等宽" class="headerlink" title="实现指示器宽度与文字等宽"></a>实现指示器宽度与文字等宽</h3><p>从上一步我们可以看到，指示器的宽度是由 <code>mIndicatorLeft</code> 和 <code>mIndicatorRight</code> 这两个变量决定的，那直接在draw方法里改？显然不行，想想，tab切换涉及两个tab的宽度计算，<code>mIndicatorLeft</code> 和 <code>mIndicatorRight</code>的计算不仅跟着位置改变还受到tab本身宽度的影响（其实我偷偷试过了，在这里改确实不行）。<br>首先，我们要找到 <code>mIndicatorLeft</code> 和 <code>mIndicatorRight</code> 被修改的地方，发现一个方法：<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setIndicatorPosition</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (left != mIndicatorLeft || right != mIndicatorRight) &#123;</span><br><span class="line">        <span class="comment">// If the indicator's left/right has changed, invalidate</span></span><br><span class="line">        mIndicatorLeft = left;</span><br><span class="line">        mIndicatorRight = right;</span><br><span class="line">        ViewCompat.postInvalidateOnAnimation(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们顺着这个方法被调用的地方终于找到 left 和 right 计算的地方：<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">updateIndicatorPosition</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> View selectedTitle = getChildAt(mSelectedPosition);</span><br><span class="line">    <span class="keyword">int</span> left, right;</span><br><span class="line">    <span class="keyword">if</span> (selectedTitle != <span class="keyword">null</span> &amp;&amp; selectedTitle.getWidth() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        left = selectedTitle.getLeft();</span><br><span class="line">        right = selectedTitle.getRight();</span><br><span class="line">        <span class="keyword">if</span> (mSelectionOffset &gt; <span class="number">0f</span> &amp;&amp; mSelectedPosition &lt; getChildCount() - <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="comment">// Draw the selection partway between the tabs</span></span><br><span class="line">            View nextTitle = getChildAt(mSelectedPosition + <span class="number">1</span>);</span><br><span class="line">            left = (<span class="keyword">int</span>) (mSelectionOffset * nextTitle.getLeft() + (<span class="number">1.0f</span> - mSelectionOffset) * left);</span><br><span class="line">            right = (<span class="keyword">int</span>) (mSelectionOffset * nextTitle.getRight() + (<span class="number">1.0f</span> - mSelectionOffset) * right);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        left = right = -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    setIndicatorPosition(left, right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>终于找到修改的地方了，首先我们要了解一下第一行 getChildAt 返回的 view 是个什么，这里就不贴代码了，直接说结论：阅读源码可知是个名为 TabView 的类，TabView 是个 LinearLayout，TabLayout 的文字是由其内部的mTextView来显示的。计算的思路就是下面的灵魂示意图：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2019/1/8/1682c8f07936ff24?w=1486&amp;h=930&amp;f=png&amp;s=95116" alt><br>翻译成伪代码就是：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">spacing = (view.width -view.mTextView.width)/2</span><br><span class="line">newLeft = view.left + spacing</span><br><span class="line">newRight = view.right - spacing</span><br></pre></td></tr></table></figure></p>
+<p>所以修改之后的 <code>updateIndicatorPosition()</code> 方法如下，要注意需要修改两组left和right，一个是当前选中的Tab，一个是下一个Tab<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">updateIndicatorPosition</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> TabView selectedTitle = (TabView) getChildAt(mSelectedPosition);</span><br><span class="line">    <span class="keyword">int</span> left, right;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (selectedTitle != <span class="keyword">null</span> &amp;&amp; selectedTitle.getWidth() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">int</span> spacing = (selectedTitle.getWidth() - selectedTitle.mTextView.getMeasuredWidth()) / <span class="number">2</span>;</span><br><span class="line">        left = selectedTitle.getLeft() + spacing;</span><br><span class="line">        right = selectedTitle.getRight() - spacing;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (mSelectionOffset &gt; <span class="number">0f</span> &amp;&amp; mSelectedPosition &lt; getChildCount() - <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="comment">// Draw the selection partway between the tabs</span></span><br><span class="line">            TabView nextTitle = (TabView) getChildAt(mSelectedPosition + <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">int</span> nextSpacing = (nextTitle.getWidth() - nextTitle.mTextView.getMeasuredWidth()) / <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">int</span> nextLeft = nextTitle.getLeft() + nextSpacing;</span><br><span class="line">            <span class="keyword">int</span> nextRight = nextTitle.getRight() - nextSpacing;</span><br><span class="line"></span><br><span class="line">            left = (<span class="keyword">int</span>) (mSelectionOffset * nextLeft +</span><br><span class="line">                            (<span class="number">1.0f</span> - mSelectionOffset) * left);</span><br><span class="line">            right = (<span class="keyword">int</span>) (mSelectionOffset * nextRight +</span><br><span class="line">                            (<span class="number">1.0f</span> - mSelectionOffset) * right);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        left = right = -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    setIndicatorPosition(left, right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这就修改完了吗？不！要知道tab之间切换有两种方式，一个是 viewPager 划过去，还有一个是点击任意一个tab跳过去，所以还有一个地方要改，不需要找了，setIndicatorPosition 紧跟着的下一个方法就是，<code>void animateIndicatorToPosition(final int position, int duration)</code> ，我们只要改其中的这一段：<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">final</span> View targetView = getChildAt(position);</span><br><span class="line">...</span><br><span class="line"><span class="keyword">final</span> <span class="keyword">int</span> targetLeft = targetView.getLeft();</span><br><span class="line"><span class="keyword">final</span> <span class="keyword">int</span> targetRight = targetView.getRight();</span><br></pre></td></tr></table></figure></p>
+<p>只需要改目标 view 的 left 和 right，因为这个方法里调用了一次 <code>updateIndicatorPosition()</code>，当前选中的 view 已经被计算过一次了。<br>修改后：<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">final</span> TabView targetView = (TabView) getChildAt(position);</span><br><span class="line">...</span><br><span class="line"><span class="keyword">int</span> targetSpacing = (targetView.getWidth() - targetView.mTextView.getMeasuredWidth()) / <span class="number">2</span>;</span><br><span class="line"><span class="keyword">final</span> <span class="keyword">int</span> targetLeft = targetView.getLeft() + targetSpacing;</span><br><span class="line"><span class="keyword">final</span> <span class="keyword">int</span> targetRight = targetView.getRight() - targetSpacing;</span><br></pre></td></tr></table></figure></p>
+<p>至此，真的就全部完成了。<br>修改好的源码地址：<a href="https://github.com/howshea/GeekNews/blob/master/basemodule/src/main/java/com/howshea/basemodule/component/viewGroup/tabLayout/TabLayout.java" target="_blank" rel="noopener">TabLayout.java</a><br><img src="https://user-gold-cdn.xitu.io/2019/1/8/1682cccd096faf2b?w=240&amp;h=240&amp;f=jpeg&amp;s=9839" alt></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果你觉得我的文章对你有帮助，欢迎对我打赏，金额任意</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="Howshea 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Howshea 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/03/数学在UI上的两个应用/" rel="next" title="数学在UI上的两个应用">
+                <i class="fa fa-chevron-left"></i> 数学在UI上的两个应用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/22/理解-Kotlin-中的属性（property）/" rel="prev" title="理解 Kotlin 中的属性（property）">
+                理解 Kotlin 中的属性（property） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="Howshea">
+            
+              <p class="site-author-name" itemprop="name">Howshea</p>
+              <p class="site-description motion-element" itemprop="description">这里躲着一个混账</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/howshea" target="_blank" title="Github">
+                      
+                        <i class="fa fa-fw fa-github"></i>Github</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://haipo-tao.lofter.com" target="_blank" title="Lofter">
+                      
+                        <i class="fa fa-fw fa-camera"></i>Lofter</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前景提要"><span class="nav-number">1.</span> <span class="nav-text">前景提要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现思路"><span class="nav-number">2.</span> <span class="nav-text">实现思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#魔改系统组件的第一步都是先把源码拷出来"><span class="nav-number">2.1.</span> <span class="nav-text">魔改系统组件的第一步都是先把源码拷出来</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现半个圆角矩形"><span class="nav-number">2.2.</span> <span class="nav-text">实现半个圆角矩形</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现指示器宽度与文字等宽"><span class="nav-number">2.3.</span> <span class="nav-text">实现指示器宽度与文字等宽</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Howshea</span>
+  <span class="post-meta-divider">|</span>
+  <span>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.2/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

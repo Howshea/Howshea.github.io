@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+  
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/Angry_Birds.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/Angry_Birds.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="UI,数学,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前几天听了一期设计师的播客节目，说到高斯模糊和投影的衰减，想起自己恰好研究过这两个问题，又回忆起池老师说的闭环原则，觉得有必要记录和分享出来。 偷偷推荐一下这个播客，这期播客链接在这里:  № 71[学好数理化，做遍设计都不怕]">
+<meta name="keywords" content="UI,数学">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数学在UI上的两个应用">
+<meta property="og:url" content="https://howshea.coding.me/2018/09/03/数学在UI上的两个应用/index.html">
+<meta property="og:site_name" content="Howshea">
+<meta property="og:description" content="前几天听了一期设计师的播客节目，说到高斯模糊和投影的衰减，想起自己恰好研究过这两个问题，又回忆起池老师说的闭环原则，觉得有必要记录和分享出来。 偷偷推荐一下这个播客，这期播客链接在这里:  № 71[学好数理化，做遍设计都不怕]">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/8127619agy1fuw4kfc9z7j20az096mwy.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/8127619agy1fuw4xsmfdnj20go0bowez.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/8127619agy1fuw643votsj20zd0lfjst.jpg">
+<meta property="og:updated_time" content="2019-06-10T11:33:38.104Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数学在UI上的两个应用">
+<meta name="twitter:description" content="前几天听了一期设计师的播客节目，说到高斯模糊和投影的衰减，想起自己恰好研究过这两个问题，又回忆起池老师说的闭环原则，觉得有必要记录和分享出来。 偷偷推荐一下这个播客，这期播客链接在这里:  № 71[学好数理化，做遍设计都不怕]">
+<meta name="twitter:image" content="http://wx4.sinaimg.cn/mw690/8127619agy1fuw4kfc9z7j20az096mwy.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://howshea.coding.me/2018/09/03/数学在UI上的两个应用/">
+
+
+
+
+
+  <title>数学在UI上的两个应用 | Howshea</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?77435816125fc45b8d1e0f83cda162c2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Howshea</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">心里像是有一些话，我们先不讲</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://howshea.coding.me/2018/09/03/数学在UI上的两个应用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Howshea">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Howshea">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数学在UI上的两个应用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-03T09:14:36+08:00">
+                2018-09-03 09:14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,124
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前几天听了一期设计师的播客节目，说到高斯模糊和投影的衰减，想起自己恰好研究过这两个问题，又回忆起池老师说的闭环原则，觉得有必要记录和分享出来。</p>
+<p>偷偷推荐一下这个播客，这期播客链接在这里:  <a href="https://anyway.fm/science-in-ui-design/#title" target="_blank" rel="noopener">№ 71[学好数理化，做遍设计都不怕]</a></p>
+<a id="more"></a>
+<h1 id="高斯模糊"><a href="#高斯模糊" class="headerlink" title="高斯模糊"></a>高斯模糊</h1><p>高斯模糊是一种在移动端常见的设计，俗称毛玻璃效果，当然，在软件上我们难以模拟一个毛玻璃的光线效果，所以，高斯模糊是直接对图像进行处理。</p>
+<p>先说一下模糊算法，简单来说，就是对每个像素的周围的像素取平均值之后重新设置这个像素的颜色</p>
+<p><img src="http://wx4.sinaimg.cn/mw690/8127619agy1fuw4kfc9z7j20az096mwy.jpg" alt></p>
+<p>我们常用的 blur 算法里要传的那个参数，即是周围取值的半径，如上图所示，半径为 1 时，只取周围一个像素的范围。</p>
+<p>那取平均值和高斯有什么关系，实际上直接取平均值做出来的效果并不自然，因为图像是连续的，越靠近的像素关联度越高，所以这个平均值应该是一个加权平均值，而权重的计算符合高斯分布，说高斯分布可能多少人不熟，因为我们读高中的时候都叫它「正态分布」。</p>
+<p><img src="http://wx1.sinaimg.cn/mw690/8127619agy1fuw4xsmfdnj20go0bowez.jpg" alt></p>
+<p>以上高斯模糊的原理，就基本解释明朗了，下面说一下高斯模糊在实际开发里的 best practice。</p>
+<p>我们已经知道了高斯模糊的计算方式，拿一个 1080 * 1920 px 的图片为例，像素点超过 200百万个，而且为了模糊效果平滑，我们通常会把半径设置的较大，一般是10，这个计算量是恐怖的，即使在高端机上也会有明显的卡顿，内存小的机器甚至会由于频繁GC造成处理失败，所以我通常的做法是先对图片做缩小处理，比如把 1080P 的图像缩小三倍，变成 360 * 640 px，这样计算量就小了至少10倍。</p>
+<h1 id="投影衰减"><a href="#投影衰减" class="headerlink" title="投影衰减"></a>投影衰减</h1><p>投影效果在 UI 上应用广泛，在 google 的材料化设计中更是最重要的元素之一，但是无论设计还是开发都遇到过一个头疼的问题，就是投影效果的制作，因为自然的投影衰减并不是线性的。</p>
+<p><img src="http://wx2.sinaimg.cn/mw690/8127619agy1fuw643votsj20zd0lfjst.jpg" alt></p>
+<p>我们想要的渐变实际上应该符合图中红色的那个函数，但是软件只能做出符合蓝色的线性函数的渐变。</p>
+<p>上面播客里主播有提到他们是用多层投影来模拟非线性的渐变（类似于求极限的思路）。在 Android 开发中，shape 也只能制作线性渐变，效果很不自然，而控件自带投影效果，5.0以下的系统实现不了，5.0以上的也不是所有组件都可以使用，而且不能调整颜色。</p>
+<p>所幸的是，14年的时候一位 google 工程师就写出了相应的投影渐变算法: <a href="https://plus.google.com/+RomanNurik/posts/2QvHVFWrHZf" target="_blank" rel="noopener">plus.google.com</a>, 文中的算法链接已经失效了，因为他把算法用 Kotlin 重新实现了一遍。我把算法直接记录在这篇 blog 里，方便其他人阅读。</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">val</span> cubicGradientScrimCache = LruCache&lt;<span class="built_in">Int</span>, Drawable&gt;(<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="built_in">Float</span>.<span class="title">constrain</span><span class="params">(min: <span class="type">Float</span>, max: <span class="type">Float</span>)</span></span>: <span class="built_in">Float</span> = Math.max(min, Math.min(max, <span class="keyword">this</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Creates an approximated cubic gradient using a multi-stop linear gradient. See</span></span><br><span class="line"><span class="comment"> * [this post](https://plus.google.com/+RomanNurik/posts/2QvHVFWrHZf) for more</span></span><br><span class="line"><span class="comment"> * details.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@SuppressLint(<span class="meta-string">"RtlHardcoded"</span>)</span></span><br><span class="line"><span class="meta">@JvmOverloads</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">makeCubicGradientScrimDrawable</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    gravity: <span class="type">Int</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">    alpha: <span class="type">Int</span> = <span class="number">0xFF</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">    red: <span class="type">Int</span> = <span class="number">0x0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">    green: <span class="type">Int</span> = <span class="number">0x0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">    blue: <span class="type">Int</span> = <span class="number">0x0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">    requestedStops: <span class="type">Int</span> = <span class="number">8</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>: Drawable &#123;</span><br><span class="line">    <span class="keyword">var</span> numStops = requestedStops</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Generate a cache key by hashing together the inputs, based on the method described in the Effective Java book</span></span><br><span class="line">    <span class="keyword">var</span> cacheKeyHash = Color.argb(alpha, red, green, blue)</span><br><span class="line">    cacheKeyHash = <span class="number">31</span> * cacheKeyHash + numStops</span><br><span class="line">    cacheKeyHash = <span class="number">31</span> * cacheKeyHash + gravity</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> cachedGradient = cubicGradientScrimCache.<span class="keyword">get</span>(cacheKeyHash)</span><br><span class="line">    <span class="keyword">if</span> (cachedGradient != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> cachedGradient</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    numStops = Math.max(numStops, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> paintDrawable = PaintDrawable().apply &#123;</span><br><span class="line">        shape = RectShape()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> stopColors = IntArray(numStops)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">0</span> until numStops) &#123;</span><br><span class="line">        <span class="keyword">val</span> x = i * <span class="number">1</span>f / (numStops - <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">val</span> opacity = Math.pow(x.toDouble(), <span class="number">3.0</span>).toFloat().constrain(<span class="number">0</span>f, <span class="number">1</span>f)</span><br><span class="line">        stopColors[i] = Color.argb((alpha * opacity).toInt(), red, green, blue)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> x0: <span class="built_in">Float</span></span><br><span class="line">    <span class="keyword">val</span> x1: <span class="built_in">Float</span></span><br><span class="line">    <span class="keyword">val</span> y0: <span class="built_in">Float</span></span><br><span class="line">    <span class="keyword">val</span> y1: <span class="built_in">Float</span></span><br><span class="line">    <span class="keyword">when</span> (gravity and Gravity.HORIZONTAL_GRAVITY_MASK) &#123;</span><br><span class="line">        Gravity.LEFT -&gt; &#123;</span><br><span class="line">            x0 = <span class="number">1</span>f</span><br><span class="line">            x1 = <span class="number">0</span>f</span><br><span class="line">        &#125;</span><br><span class="line">        Gravity.RIGHT -&gt; &#123;</span><br><span class="line">            x0 = <span class="number">0</span>f</span><br><span class="line">            x1 = <span class="number">1</span>f</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> -&gt; &#123;</span><br><span class="line">            x0 = <span class="number">0</span>f</span><br><span class="line">            x1 = <span class="number">0</span>f</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">when</span> (gravity and Gravity.VERTICAL_GRAVITY_MASK) &#123;</span><br><span class="line">        Gravity.TOP -&gt; &#123;</span><br><span class="line">            y0 = <span class="number">1</span>f</span><br><span class="line">            y1 = <span class="number">0</span>f</span><br><span class="line">        &#125;</span><br><span class="line">        Gravity.BOTTOM -&gt; &#123;</span><br><span class="line">            y0 = <span class="number">0</span>f</span><br><span class="line">            y1 = <span class="number">1</span>f</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> -&gt; &#123;</span><br><span class="line">            y0 = <span class="number">0</span>f</span><br><span class="line">            y1 = <span class="number">0</span>f</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    paintDrawable.shaderFactory = <span class="keyword">object</span> : ShapeDrawable.ShaderFactory() &#123;</span><br><span class="line">        <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">resize</span><span class="params">(width: <span class="type">Int</span>, height: <span class="type">Int</span>)</span></span>: Shader &#123;</span><br><span class="line">            <span class="keyword">return</span> LinearGradient(</span><br><span class="line">                width * x0,</span><br><span class="line">                height * y0,</span><br><span class="line">                width * x1,</span><br><span class="line">                height * y1,</span><br><span class="line">                stopColors, <span class="literal">null</span>,</span><br><span class="line">                Shader.TileMode.CLAMP)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    cubicGradientScrimCache.put(cacheKeyHash, paintDrawable)</span><br><span class="line">    <span class="keyword">return</span> paintDrawable</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>今年的第二篇 blog，依旧没什么技术含量。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果你觉得我的文章对你有帮助，欢迎对我打赏，金额任意</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="Howshea 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Howshea 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/UI/" rel="tag"># UI</a>
+          
+            <a href="/tags/数学/" rel="tag"># 数学</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/02/安装黑苹果踩坑记录/" rel="next" title="安装黑苹果踩坑记录">
+                <i class="fa fa-chevron-left"></i> 安装黑苹果踩坑记录
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/22/模仿Google-News的TabLayout/" rel="prev" title="模仿Google News 的 TabLayout">
+                模仿Google News 的 TabLayout <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="Howshea">
+            
+              <p class="site-author-name" itemprop="name">Howshea</p>
+              <p class="site-description motion-element" itemprop="description">这里躲着一个混账</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/howshea" target="_blank" title="Github">
+                      
+                        <i class="fa fa-fw fa-github"></i>Github</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://haipo-tao.lofter.com" target="_blank" title="Lofter">
+                      
+                        <i class="fa fa-fw fa-camera"></i>Lofter</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#高斯模糊"><span class="nav-number">1.</span> <span class="nav-text">高斯模糊</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#投影衰减"><span class="nav-number">2.</span> <span class="nav-text">投影衰减</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Howshea</span>
+  <span class="post-meta-divider">|</span>
+  <span>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.2/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
