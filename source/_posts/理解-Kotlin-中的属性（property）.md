@@ -50,7 +50,7 @@ var age = 0
 ```
 
 如果这样写其实是会发生递归，无法赋值成功
-![](https://user-gold-cdn.xitu.io/2019/4/12/16a0f72d171968dc?w=432&h=198&f=png&s=20920)
+![](https://user-gold-cdn.xitu.io/2019/4/12/16a0f72d171968dc?imageslim)
 这里AS也提醒你了，这里发生了递归  
 所以我们一般都这么写：
 ```kotlin
