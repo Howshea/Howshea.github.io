@@ -91,13 +91,13 @@
 <meta property="og:site_name" content="Howshea">
 <meta property="og:description" content="这篇文章是一时兴起想写的，因为我发现我对Kotlin的属性理解一直有误">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/4/12/16a0f72d171968dc?imageslim">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/4/12/16a0fd7357d4602a?w=1322&h=124&f=png&s=38998">
-<meta property="og:updated_time" content="2019-06-10T13:54:21.022Z">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/8127619aly1g6wt6adegmj20c005iglg.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/large/8127619aly1g6wt6dwnn4j210q03gq36.jpg">
+<meta property="og:updated_time" content="2019-09-12T08:23:22.352Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="理解 Kotlin 中的属性（property）">
 <meta name="twitter:description" content="这篇文章是一时兴起想写的，因为我发现我对Kotlin的属性理解一直有误">
-<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2019/4/12/16a0f72d171968dc?imageslim">
+<meta name="twitter:image" content="http://wx3.sinaimg.cn/mw690/8127619aly1g6wt6adegmj20c005iglg.jpg">
 
 
 
@@ -417,7 +417,8 @@
 <p>可以对比出，Kotlin里不需要额外的get、set方法，当然你也写不了，因为 Kotlin 已经默认实现了get、set，所以在Kotlin里，我们写不出 <strong>field</strong>。</p>
 <h2 id="Kotlin-中的-backing-field-是什么"><a href="#Kotlin-中的-backing-field-是什么" class="headerlink" title="Kotlin 中的 backing field 是什么"></a>Kotlin 中的 backing field 是什么</h2><p>前面说 Kotlin 中不能写 field，但是我们很多时候必须要用到 field，比如你复写一个属性的set方法</p>
 <figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> age = <span class="number">0</span></span><br><span class="line">    <span class="keyword">set</span>(value)&#123;</span><br><span class="line">        age = value + <span class="number">1</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>如果这样写其实是会发生递归，无法赋值成功<br><img src="https://user-gold-cdn.xitu.io/2019/4/12/16a0f72d171968dc?imageslim" alt><br>这里AS也提醒你了，这里发生了递归<br>所以我们一般都这么写：<br><figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> age = <span class="number">0</span></span><br><span class="line">    <span class="keyword">set</span>(value)&#123;</span><br><span class="line">        field = value + <span class="number">1</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果这样写其实是会发生递归，无法赋值成功<br><img src="http://wx3.sinaimg.cn/mw690/8127619aly1g6wt6adegmj20c005iglg.jpg" alt><br>这里AS也提醒你了，这里发生了递归<br>所以我们一般都这么写：</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> age = <span class="number">0</span></span><br><span class="line">    <span class="keyword">set</span>(value)&#123;</span><br><span class="line">        field = value + <span class="number">1</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>这里出现了一个 <strong>field</strong> 的东西可以访问和赋值，这个东西就是 Kotlin 的<strong>幕后字段（Backing Field）</strong><br>我们可以简单地理解为，Kotlin 没有明面上的 field，但是它存在于幕后</p>
 <h2 id="没有-backing-field的成员是什么？"><a href="#没有-backing-field的成员是什么？" class="headerlink" title="没有 backing field的成员是什么？"></a>没有 backing field的成员是什么？</h2><figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> _age =<span class="number">0</span></span><br><span class="line">    <span class="keyword">var</span> age:<span class="built_in">Int</span></span><br><span class="line">        <span class="keyword">get</span>() = _age</span><br><span class="line">        <span class="keyword">set</span>(value) &#123;</span><br><span class="line">            _age = value</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>当我们声明一个 var 为私有时，比如上面的_age，我们叫它 <strong>幕后属性</strong> ,虽然它看起来不需要get、set方法，但是其实仍然是有的，只不过它的get、set方法都被声明为 private 了</p>
@@ -432,7 +433,7 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">// access flags 0x19</span><br><span class="line">public final static getTopPadding(Landroid/view/View;)I</span><br><span class="line">  @Lorg/jetbrains/annotations/NotNull;() // invisible, parameter 0****</span><br><span class="line">...</span><br><span class="line">// access flags 0x19</span><br><span class="line">public final static setTopPadding(Landroid/view/View;I)V</span><br><span class="line">  @Lorg/jetbrains/annotations/NotNull;() // invisible, parameter 0</span><br></pre></td></tr></table></figure>
 <p>很明显，这里就是直接生成了两个静态函数<code>getTopPadding</code>和<code>setTopPadding</code>，并不是真的为View这个类添加了一个成员，那这个东西到底什么呢？我们把上面的代码稍微改一下：</p>
 <figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> View.topPadding: <span class="built_in">Int</span> = <span class="number">0</span> </span><br><span class="line">    <span class="keyword">inline</span> <span class="keyword">get</span>() = paddingTop</span><br><span class="line">    <span class="keyword">set</span>(value) = setPadding(paddingLeft, value, paddingRight, paddingBottom)</span><br></pre></td></tr></table></figure>
-<p>给这个成员加个默认值，可以看到，编辑器报错了<br><img src="https://user-gold-cdn.xitu.io/2019/4/12/16a0fd7357d4602a?w=1322&amp;h=124&amp;f=png&amp;s=38998" alt><br>并且告诉你这个属性没有幕后字段，所以不能初始化，好吧，官方给出了定义，<strong>这就是一个属性（property）</strong>。  </p>
+<p>给这个成员加个默认值，可以看到，编辑器报错了<br><img src="http://wx2.sinaimg.cn/large/8127619aly1g6wt6dwnn4j210q03gq36.jpg" alt><br>并且告诉你这个属性没有幕后字段，所以不能初始化，好吧，官方给出了定义，<strong>这就是一个属性（property）</strong>。  </p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在Kotlin中一个 property 不管有没有 backing field 都称之为 property，而在 Java 中 field + get、set方法一起才能是一个 property。<br>如果我们从Java 的角度去看一个没有 backing field 的 property，可以理解为 Kotlin 对 以get、set开头这样的函数的语法糖，这种语法糖有什么用呢？个人觉得是为了DSL语法服务的，还是以上面那个topPadding为例，当你在用 DSL 语法设置一个view的时候，比如：</p>
 <figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">view.apply &#123;</span><br><span class="line">    background = getDrawable(R.drawable.bg)</span><br><span class="line">    visibility = View.INVISIBLE</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>前面都是一个属性等于一个值，这个时候下面跟上 <code>topPadding = xxx</code>，语义十分清晰连贯，如果这里突然用一个 <code>setTopPadding(this,xxx)</code> ，不仅代码不美观，而且打断了阅读代码和编写代码的人的思维上的连贯性。</p>
