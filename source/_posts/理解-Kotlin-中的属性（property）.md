@@ -50,9 +50,10 @@ var age = 0
 ```
 
 如果这样写其实是会发生递归，无法赋值成功
-![](https://user-gold-cdn.xitu.io/2019/4/12/16a0f72d171968dc?imageslim)
+![](http://wx3.sinaimg.cn/mw690/8127619aly1g6wt6adegmj20c005iglg.jpg)
 这里AS也提醒你了，这里发生了递归  
 所以我们一般都这么写：
+
 ```kotlin
 var age = 0
     set(value){
@@ -125,7 +126,7 @@ var View.topPadding: Int = 0
 ```
 
 给这个成员加个默认值，可以看到，编辑器报错了
-![](https://user-gold-cdn.xitu.io/2019/4/12/16a0fd7357d4602a?w=1322&h=124&f=png&s=38998)
+![](http://wx2.sinaimg.cn/large/8127619aly1g6wt6dwnn4j210q03gq36.jpg)
 并且告诉你这个属性没有幕后字段，所以不能初始化，好吧，官方给出了定义，**这就是一个属性（property）**。  
 
 ## 总结

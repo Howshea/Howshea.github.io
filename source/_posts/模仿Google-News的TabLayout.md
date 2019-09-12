@@ -11,20 +11,20 @@ categories: 技术
 
 <!--more-->
 
-![](https://user-gold-cdn.xitu.io/2019/1/8/1682b5db9a2db76c?w=1080&h=2160&f=png&s=1088210)
+![](http://wx2.sinaimg.cn/mw690/8127619aly1g6wsmsed2uj20u01o01kx.jpg)
 具体效果大家可以自己下载 Google News 看一下，截图上大概看出来一共有两个要素：
 
 1. 指示器和文字宽度相同
 2. 指示器的形状是半个圆角矩形
 
 于是，我模仿的结果：（截图来自我的一个小项目里[GeekNews](https://github.com/howshea/GeekNews)）
-![](https://user-gold-cdn.xitu.io/2019/1/8/1682b79ea8ea9c3e?w=1080&h=2160&f=png&s=424859)
+![](http://wx3.sinaimg.cn/mw690/8127619aly1g6wsni87luj20u01o0tjy.jpg)
 
 开始模仿之前，先问个问题，这个控件是 TabLayout 吗？答案：是的，我用 monitor 看过了。  
 所以可以得到结论：直接魔改源码是最简单最快的方法。
 ## 实现思路
 ### 魔改系统组件的第一步都是先把源码拷出来
-![](https://user-gold-cdn.xitu.io/2019/1/8/1682b7d7ca8d4b40?w=382&h=240&f=png&s=26774)
+![](http://wx2.sinaimg.cn/large/8127619aly1g6wso4iv4uj20am06owel.jpg)
 就这四个文件，拷出来改改里面一些类的引用路径，试一下能用就行了
 
 ### 实现半个圆角矩形
@@ -90,8 +90,9 @@ private void updateIndicatorPosition() {
 ```
 终于找到修改的地方了，首先我们要了解一下第一行 getChildAt 返回的 view 是个什么，这里就不贴代码了，直接说结论：阅读源码可知是个名为 TabView 的类，TabView 是个 LinearLayout，TabLayout 的文字是由其内部的mTextView来显示的。计算的思路就是下面的灵魂示意图：
 
-![](https://user-gold-cdn.xitu.io/2019/1/8/1682c8f07936ff24?w=1486&h=930&f=png&s=95116)
+![](http://wx4.sinaimg.cn/mw690/8127619aly1g6wspttoixj215a0pugmk.jpg)
 翻译成伪代码就是：
+
 ```
 spacing = (view.width -view.mTextView.width)/2
 newLeft = view.left + spacing
@@ -145,4 +146,4 @@ final int targetRight = targetView.getRight() - targetSpacing;
 ```
 至此，真的就全部完成了。
 修改好的源码地址：[TabLayout.java](https://github.com/howshea/GeekNews/blob/master/basemodule/src/main/java/com/howshea/basemodule/component/viewGroup/tabLayout/TabLayout.java)
-![](https://user-gold-cdn.xitu.io/2019/1/8/1682cccd096faf2b?w=240&h=240&f=jpeg&s=9839)
+![](http://wx1.sinaimg.cn/mw690/8127619aly1g6wsqy2qcsj206o06o0sl.jpg)
